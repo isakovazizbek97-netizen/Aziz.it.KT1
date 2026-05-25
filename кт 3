@@ -1,0 +1,40 @@
+def get_books(filename):
+    books = []
+    with open(filename, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = [part.strip() for part in line.split(',')]
+            if len(parts) >= 5:
+                try:
+                    isbn = parts[0]
+                    title = parts[1]
+                    author = parts[2]
+                    quantity = int(parts[3])
+                    price = float(parts[4])
+                    books.append([isbn, title, author, quantity, price])
+                except:
+                    continue
+    return books
+//2
+def filtered_books(books, keyword):
+    result = []
+    keyword = keyword.lower()
+    for book in books:
+        title_author = (book[1] + " " + book[2]).lower()
+        if keyword in title_author:
+            combined = book[1] + ", " + book[2]
+            new_book = [book[0], combined, book[3], book[4]]
+            result.append(new_book)
+    return result
+//3
+def calculate_totals(books):
+    result = []
+    for book in books:
+        isbn = book[0]
+        quantity = book[2]
+        price = book[3]
+        total = quantity * price
+        result.append((isbn, total))
+    return result
