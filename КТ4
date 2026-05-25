@@ -1,0 +1,161 @@
+let obj = {
+    price1: 100,
+    price2: 150,
+    price3: 200,
+    price4: 100,
+    price5: 150
+};
+
+let sum = 0;
+for (let key in obj) {
+    sum = sum + obj[key];
+}
+console.log(sum);
+//2
+let array = [
+    {id: 1, name: 'apple'},
+    {id: 2, name: 'watermelon'},
+    {id: 3, name: 'qiwi'},
+    {id: 4, name: 'lemon'}
+];
+
+let result = [];
+for (let i = 0; i < array.length; i++) {
+    result.push([array[i].id, array[i].name]);
+}
+console.log(result);
+//3
+function logString() {
+    let str = "";
+    for (let i = 0; i < arguments.length; i++) {
+        if (i > 0) {
+            str = str + " ";
+        }
+        str = str + arguments[i];
+    }
+    console.log(str);
+}
+//4
+function checkObj(obj) {
+    if (obj.particle !== undefined) {
+        return true;
+    }
+    return false;
+}
+//5
+function generateArray(array) {
+    for (let i = 0; i < array.length; i++) {
+        if (typeof array[i] === "object" && array[i] !== null) {
+            let values = [];
+            for (let key in array[i]) {
+                values.push(array[i][key]);
+            }
+            array[i] = values;
+        }
+    }
+    return array;
+}
+//6
+let users = [
+    {id: 1, name: "Alex", lastname: "Williams", age: 20},
+    {id: 2, name: "Steven", lastname: "King", age: 34}
+];
+
+function addUser(name, lastname, age) {
+    let id = users.length + 1;
+    users.push({id: id, name: name, lastname: lastname, age: age});
+}
+
+function updateUser(id, name, lastname, age) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id === id) {
+            users[i].name = name;
+            users[i].lastname = lastname;
+            users[i].age = age;
+            break;
+        }
+    }
+}
+
+function deleteUser(id) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id === id) {
+            users.splice(i, 1);
+            break;
+        }
+    }
+}
+//7
+let task1 = products.filter(item => item.count > 10);
+
+let task2 = products.find(item => item.price >= 800 && item.price <= 900);
+
+let task3 = [...products].sort((a, b) => b.price - a.price);
+
+let task4 = products.reduce((sum, item) => sum + (item.price * item.count), 0);
+
+let task5 = products.map(item => {
+    return {
+        ...item,
+        marks_total: item.marks ? item.marks.reduce((sum, m) => sum + m, 0) : 0
+    };
+}).reduce((sum, item) => sum + item.marks_total, 0);
+
+console.log(task1);
+console.log(task2);
+console.log(task3);
+console.log(task4);
+console.log(task5);
+//8
+class Email {
+    constructor(email) {
+        this.setEmail(email);
+    }
+
+    setEmail(email) {
+        this.email = email;
+    }
+
+    get isValid() {
+        if (!this.email) return false;
+        let parts = this.email.split('@');
+        if (parts.length !== 2) return false;
+        let login = parts[0];
+        let domain = parts[1];
+        if (login.length === 0) return false;
+        if (domain.length > 3) return false;
+        let forbidden = ['*', '#', '$', '%', '^', '&'];
+        for (let char of forbidden) {
+            if (login.includes(char)) return false;
+        }
+        return true;
+    }
+}
+
+let email1 = new Email("newEmail@gmail.com");
+console.log(email1.isValid);
+//9
+class Contact extends Email {
+    constructor(email, phone) {
+        super(email);
+        this.phone = phone;
+    }
+
+    get phoneType() {
+        if (!this.phone) return "Неизвестный";
+        let cleanPhone = this.phone.replace(/\D/g, '');
+        if (cleanPhone.length === 12) {
+            return "Мобильный";
+        } else if (cleanPhone.length === 10) {
+            return "Городской";
+        } else {
+            return "Неизвестный";
+        }
+    }
+}
+
+let contact1 = new Contact("test@mail.com", "+79161234567");
+console.log(contact1.phoneType);
+
+let contact2 = new Contact("test2@mail.com", "84951234567");
+console.log(contact2.phoneType);
